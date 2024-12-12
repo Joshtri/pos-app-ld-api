@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import penggunaRoute from "./routes/PenggunaRoute.ts";
 import parfumRoute from "./routes/ParfumRoute.ts";
+import paketRoute from "./routes/PaketRoute.ts";
 
 dotenv.config();
 
@@ -25,7 +26,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
 
-app.use('/api/v1', penggunaRoute, parfumRoute);
+app.use('/api/v1', penggunaRoute, parfumRoute, paketRoute);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
