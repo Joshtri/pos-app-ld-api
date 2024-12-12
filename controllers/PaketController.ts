@@ -37,4 +37,24 @@ export class PaketController{
             });
         }
     }
+
+    async updatePaket(req: Request, res: Response): Promise<void>{
+        try {
+            const {id} = req.params;
+            const paket = await this.paketService.updatePaket(id, req.body);
+            if (!paket) {
+              res.status(404).json({ error: 'Paket tidak ditemukan' });
+              return;
+            }
+            res.json(paket);
+
+
+        } catch (error) {
+            res.status(200).json({
+                status: "error",
+                message: "Gagal mengupdate paket",
+                error: (error as Error).message,
+            })
+        }
+    }
 }
