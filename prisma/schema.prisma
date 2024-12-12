@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+model Pengguna {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  username  String
+  password  String
+  peran     String
+  dibuatPada DateTime @default(now())
+  transaksi Transaksi[]
+}
+
+model Pelanggan {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  nama         String
+  nomorTelepon String
+  alamat       String?
+  dibuatPada   DateTime @default(now())
+  transaksi Transaksi[]
+}
+
+model Layanan {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  nama       String
+  kategori   String      // Contoh: "Laundry" atau "Dry Cleaning"
+  hargaPerKg Float
+  dibuatPada DateTime    @default(now())
+  transaksi  Transaksi[] 
+}
+
+
+model Paket {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  nama         String
+  pengaliHarga Float
+  dibuatPada   DateTime @default(now())
+  transaksi Transaksi[]
+}
+
+
+model Parfum {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  nama       String
+  dibuatPada DateTime @default(now())
+  transaksi Transaksi[]
+}
+
+model Transaksi {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  nomorNota        String   @unique
+  pelangganId      String   @db.ObjectId
+  penggunaId       String   @db.ObjectId
+  layananId        String   @db.ObjectId
+  paketId          String   @db.ObjectId
+  parfumId         String   @db.ObjectId
+  berat            Float
+  hargaPerKg       Float // Tambahkan harga per kilogram untuk fleksibilitas
+  totalHarga       Float
+  tanggalMasuk     DateTime // Tanggal Masuk
+  tanggalPengambilan DateTime
+  jamPengambilan   String
+  tanggalPengantaran DateTime
+  jamPengantaran   String
+  note             String?  // Catatan tambahan
+  dibuatPada       DateTime @default(now())
+
+  pelanggan Pelanggan @relation(fields: [pelangganId], references: [id])
+  pengguna  Pengguna  @relation(fields: [penggunaId], references: [id])
+  layanan   Layanan   @relation(fields: [layananId], references: [id])
+  paket     Paket     @relation(fields: [paketId], references: [id])
+  parfum    Parfum    @relation(fields: [parfumId], references: [id])
+}

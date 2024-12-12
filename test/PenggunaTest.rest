@@ -1,0 +1,12 @@
+GET http://localhost:5000/api/v1/pengguna
+
+
+###
+POST http://localhost:5000/api/v1/pengguna
+Content-Type: application/json
+
+{
+    "username": "Joshtri",
+    "password": "12345678",
+    "peran": "admin"
+}
