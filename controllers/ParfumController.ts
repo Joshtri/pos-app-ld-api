@@ -34,6 +34,46 @@ export class ParfumController {
             });
         }
     }
+
+    async deleteParfum(req:Request, res:Response):Promise<void>{
+        try {
+            const {id} = req.params;
+            const parfum = await this.parfumService.deleteParfum(id);
+
+            if (!parfum) {
+                res.status(404).json({ error: 'parfum tidak ditemukan' });
+                return;
+            }
+
+            res.status(201).json({
+                status: "success",
+                message: "berhasil menghapus parfum",
+                data:parfum
+            })
+
+
+        } catch (error) {
+            const errorMessage =  error instanceof Error ? error.message : 'Unknown error';
+            res.status(500).json({
+                status: "error",
+                error: "gagal menghapus parfum",
+                message: errorMessage
+            });
+        }
+    }
+
+    async getParfumById(req:Request, res:Response): Promise<void>{
+        try {
+            
+        } catch (error) {
+            const errorMessage =  error instanceof Error ? error.message : 'Unknown error';
+            res.status(500).json({
+                status: "error",
+                error: "gagal mendapatkan data parfum",
+                message: errorMessage
+            });
+        }
+    }
     
 
 
