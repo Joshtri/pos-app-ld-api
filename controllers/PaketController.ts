@@ -41,4 +41,77 @@ export class PaketController{
             });
         }
     }
+
+    async getPaketById(req:Request, res: Response): Promise<void>{
+        try {
+            const {id} = req.params;
+            const paket = await this.paketService.getPaketById(id);
+            
+            if (!paket) {
+                res.status(404).json({ error: 'paket tidak ditemukan' });
+                return;
+            }
+            // res.json(paket);
+            res.status(201).json({
+                status: "success",
+                message: "berhasil mendapatkan data paket",
+                data: paket
+            })
+
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error'; 
+            res.status(500).json({ 
+                status: "error",
+                error: 'Gagal mendapatkan pengguna',
+                message: errorMessage
+            })
+        }
+    }
+
+    async updatePaket(req:Request, res:Response): Promise<void>{
+        try {
+            const {id} = req.params;
+            const paket = await this.paketService.updatePaket(id, req.body);
+
+            if (!paket) {
+                res.status(404).json({ error: 'Paket tidak ditemukan' });
+                return;
+            }
+            res.status(201).json({
+                status: "success",
+                message: "berhasil memperbarui paket",
+                data: paket
+            });
+
+        } catch (error) {
+            const errorMessage =  error instanceof Error ? error.message : 'Unknown error';
+            res.status(500).json({
+                status: "error",
+                error: "gagal memperbarui paket",
+                message: errorMessage
+            })
+        }
+    }
+
+    //hapus paket
+    async deletePaket(req:Request, res:Response): Promise<void>{
+        try {
+            const {id} = req.params;
+            const paket = await this.paketService.deletePaket(id);
+
+            res.status(201).json({
+                status: "success",
+                error: "berhasil menghapus paket",
+                data: paket
+            });
+            
+        } catch (error) {
+            const errorMessage =  error instanceof Error ? error.message : 'Unknown error';
+            res.status(500).json({
+                status: "error",
+                error: "gagal menghapus paket",
+                message: errorMessage
+            });
+        }
+    }
 }
