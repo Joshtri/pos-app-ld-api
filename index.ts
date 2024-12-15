@@ -14,7 +14,7 @@ const port = process.env.PORT || 5000;
 // Konfigurasi CORS
 const corsOptions = {
   origin: ["http://localhost:5173", "https://your-frontend-domain.com"], // Ganti dengan domain frontend Anda
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
