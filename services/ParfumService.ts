@@ -33,10 +33,14 @@ export class ParfumService{
         return this.parfumRepo.deleteParfum(id)
     }
 
-    async updateParfum(id:string, data: Partial<Omit<Parfum, 'id' | 'dibuatPada'>>): Promise<Parfum | null>{
-        return this.parfumRepo.updateParfum(id,data);
-        
-    }
+  // Update parfum
+  async updateParfum(
+    id: string,
+    data: Partial<Omit<Parfum, "id" | "dibuatPada">>
+  ): Promise<Parfum | null> {
+    // Panggil repository untuk memperbarui data
+    return this.parfumRepo.updateParfum(id, data);
+  }
 
 
     
